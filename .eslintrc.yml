@@ -1,0 +1,29 @@
+root: true
+
+env:
+  es2023: true
+  browser: true
+
+parser: '@typescript-eslint/parser'
+
+parserOptions:
+  project: 'tsconfig.json'
+  sourceType: 'module'
+
+extends:
+  - eslint:recommended
+  - plugin:solid/typescript
+  - plugin:storybook/recommended
+
+overrides:
+  - files:
+      - '*.ts'
+      - '*.tsx'
+    extends:
+      - standard-with-typescript
+      - prettier
+
+ignorePatterns:
+  - dist
+  - build
+  - node_modules
