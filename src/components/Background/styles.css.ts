@@ -15,9 +15,3 @@ export const updateIputIcon = style({
   width: '40px',
   height: '40px'
 })
-
-export const inputLabel = style({
-  position: 'absolute',
-  top: '1em',
-  left: '1em'
-})
