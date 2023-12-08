@@ -12,7 +12,8 @@ globalStyle('html', {
 })
 
 globalStyle('body', {
-  color: 'white'
+  color: 'white',
+  fontVariantNumeric: 'tabular-nums lining-nums'
 })
 
 globalStyle('ol, ul, menu', { listStyle: 'none' })
