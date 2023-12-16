@@ -1,13 +1,9 @@
 import { type JSX, type Component, useContext } from 'solid-js'
-
 import {
   type SettingsContextType,
   makeSettingsContext,
   SettingsContext
 } from './context.ts'
-
-export const useSettings = (): SettingsContextType =>
-  useContext(SettingsContext)
 
 export const SettingsProvider: Component<{ children: JSX.Element }> = props => {
   return (
@@ -16,3 +12,6 @@ export const SettingsProvider: Component<{ children: JSX.Element }> = props => {
     </SettingsContext.Provider>
   )
 }
+
+export const useSettings = (): SettingsContextType =>
+  useContext(SettingsContext)

@@ -2,7 +2,7 @@ import { type JSX, type Component, createSignal } from 'solid-js'
 import { Portal } from 'solid-js/web'
 
 import { useSettings } from '@features/settings/provider.tsx'
-import { saveFile } from '@features/backgroundFile/handleStorage.ts'
+import { writeFile } from '@features/backgroundFile/handleStorage.ts'
 import { GearSVG } from './gear.js'
 import * as styles from './Settings.css.js'
 
@@ -13,15 +13,15 @@ interface SettingsProps {
 
 const Settings: Component<SettingsProps> = () => {
   const [modalStatus, setModal] = createSignal<boolean>(false)
-  const [, { setBackground }] = useSettings()
+  const [, dispatch] = useSettings()
 
   const inputBackgroundEvent: InputEventHandler = event => {
-    const { files } = event.currentTarget
+    if (event.currentTarget.files != null) {
+      const [file] = event.currentTarget.files
 
-    if (files?.[0] != null) {
-      void (async () => {
-        setBackground(await saveFile(files[0], 'background'))
-      })()
+      void writeFile(file, 'background').then(result => {
+        if (result.success) dispatch({ background: { file } })
+      })
     }
   }
 

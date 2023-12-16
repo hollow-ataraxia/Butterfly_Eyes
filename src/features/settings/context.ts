@@ -1,23 +1,16 @@
-import {
-  type Accessor,
-  type Setter,
-  createContext,
-  createSignal
-} from 'solid-js'
+import { createContext } from 'solid-js'
+import { type SetStoreFunction, createStore } from 'solid-js/store'
+import { type Settings } from './scheme.ts'
 
 export type SettingsContextType = readonly [
-  {
-    readonly background: Accessor<string | undefined>
-  },
-  {
-    readonly setBackground: Setter<string | undefined>
-  }
+  state: Settings,
+  setState: SetStoreFunction<Settings>
 ]
 
 export const makeSettingsContext = (): SettingsContextType => {
-  const [background, setBackground] = createSignal<string>()
+  const [state, setState] = createStore<Settings>({ background: {} })
 
-  return [{ background }, { setBackground }]
+  return [state, setState]
 }
 
 export const SettingsContext = createContext<SettingsContextType>(
