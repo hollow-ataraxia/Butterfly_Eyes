@@ -1,3 +1,5 @@
+import { readFile } from './readFile.ts'
+
 interface WriteFileProps {
   file: File
   filename: string
@@ -8,34 +10,19 @@ export const writeFile = async ({
   file,
   filename
 }: WriteFileProps): WriteFileType => {
-  const makeDirectory = async (
-    root: FileSystemDirectoryHandle,
-    pathname: string[]
-  ): Promise<FileSystemFileHandle> => {
-    if (pathname.length > 1) {
-      const directory = await root.getDirectoryHandle(pathname[0], {
-        create: true
-      })
+  const fileHandle = await readFile({
+    root: await navigator.storage.getDirectory(),
+    pathname: filename.split('/'),
+    create: true
+  })
+  const writable = await fileHandle?.createWritable()
 
-      return await makeDirectory(directory, pathname.slice(1))
-    }
-
-    return await root.getFileHandle(pathname[0], { create: true })
-  }
-
-  try {
-    const systemFile = await makeDirectory(
-      await navigator.storage.getDirectory(),
-      filename.split('/')
-    )
-    const writable = await systemFile.createWritable()
+  if (fileHandle != null && writable != null) {
     await writable.write(file)
     await writable.close()
 
-    return { file: await systemFile.getFile(), success: true }
-  } catch (err) {
-    console.error(err)
-
-    return { success: false }
+    return { file: await fileHandle?.getFile(), success: true }
   }
+
+  return { success: false }
 }
