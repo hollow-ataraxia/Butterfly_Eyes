@@ -2,7 +2,7 @@ import { type JSX, type Component, createSignal } from 'solid-js'
 import { Portal } from 'solid-js/web'
 
 import { useSettings } from '@features/settings/provider.tsx'
-import { writeFile } from '@features/backgroundFile/handleStorage.ts'
+import { writeFile } from '@features/backgroundFile/utils/writeFile.ts'
 import { GearSVG } from './gear.js'
 import * as styles from './Settings.css.js'
 
@@ -19,7 +19,7 @@ const Settings: Component<SettingsProps> = () => {
     if (event.currentTarget.files != null) {
       const [file] = event.currentTarget.files
 
-      void writeFile(file, 'background').then(result => {
+      void writeFile({ file, filename: 'background' }).then(result => {
         if (result.success) dispatch({ background: { file } })
       })
     }
