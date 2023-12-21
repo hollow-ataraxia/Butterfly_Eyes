@@ -1,6 +1,4 @@
 import { type JSX, type Component, createSignal } from 'solid-js'
-import { Portal } from 'solid-js/web'
-
 import { useSettings } from '@features/settings/provider.tsx'
 import { writeFile } from '@features/backgroundFile/utils/writeFile.ts'
 import { GearSVG } from './gear.js'
@@ -26,7 +24,12 @@ const Settings: Component<SettingsProps> = () => {
   }
 
   return (
-    <Portal>
+    <aside>
+      <section
+        style={{ width: modalStatus() ? 'auto' : '0px', overflow: 'hidden' }}
+      >
+        <input type="file" accept="image/*" onInput={inputBackgroundEvent} />
+      </section>
       <button
         onClick={() => setModal(prev => !prev)}
         type="button"
@@ -34,11 +37,7 @@ const Settings: Component<SettingsProps> = () => {
       >
         {GearSVG}
       </button>
-
-      <dialog class={styles.dialog} open={modalStatus()}>
-        <input type="file" accept="image/*" onInput={inputBackgroundEvent} />
-      </dialog>
-    </Portal>
+    </aside>
   )
 }
 
