@@ -1,8 +1,13 @@
-import { type JSX, type Component, createSignal } from 'solid-js'
+import {
+  type JSX,
+  type Component,
+  createSignal,
+  createUniqueId
+} from 'solid-js'
 import { useSettings } from '@features/settings/provider.tsx'
 import { writeFile } from '@features/backgroundFile/utils/writeFile.ts'
-import { GearSVG } from './gear.js'
-import * as styles from './Settings.css.js'
+import { GearSVG } from './gear.ts'
+import styles from './Settings.css.ts'
 
 type InputEventHandler = JSX.EventHandler<HTMLInputElement, InputEvent>
 interface SettingsProps {
@@ -12,6 +17,7 @@ interface SettingsProps {
 const Settings: Component<SettingsProps> = () => {
   const [modalStatus, setModal] = createSignal<boolean>(false)
   const [, dispatch] = useSettings()
+  const inputId = createUniqueId()
 
   const inputBackgroundEvent: InputEventHandler = event => {
     if (event.currentTarget.files != null) {
@@ -24,16 +30,30 @@ const Settings: Component<SettingsProps> = () => {
   }
 
   return (
-    <aside>
+    <aside class={styles.aside}>
       <section
-        style={{ width: modalStatus() ? 'auto' : '0px', overflow: 'hidden' }}
+        classList={{
+          [styles.collapse]: true,
+          [styles.collapseClose]: modalStatus()
+        }}
       >
-        <input type="file" accept="image/*" onInput={inputBackgroundEvent} />
+        <div class={styles.devMargin}>
+          <input
+            id={inputId}
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onInput={inputBackgroundEvent}
+          />
+          <label for={inputId} class={styles.inputLabel}>
+            Chose background
+          </label>
+        </div>
       </section>
       <button
-        onClick={() => setModal(prev => !prev)}
         type="button"
         class={styles.configBtn}
+        onClick={() => setModal(prev => !prev)}
       >
         {GearSVG}
       </button>
