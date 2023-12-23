@@ -6,7 +6,7 @@ import {
 } from 'solid-js'
 import { useSettings } from '@features/settings/provider.tsx'
 import { writeFile } from '@features/backgroundFile/utils/writeFile.ts'
-import { GearSVG } from './gear.ts'
+import { GearSVG } from './gear.tsx'
 import styles from './Settings.css.ts'
 
 type InputEventHandler = JSX.EventHandler<HTMLInputElement, InputEvent>
