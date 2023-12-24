@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { backgroundScheme } from '@features/backgroundFile/utils/backgroundScheme'
+import { backgroundScheme } from '@features/backgroundFile/backgroundScheme.ts'
 
 export const settingsScheme = z.object({
   background: backgroundScheme.optional()
