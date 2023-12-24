@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { backgroundScheme } from '@features/backgroundFile/utils/backgroundScheme'
 
 export const settingsScheme = z.object({
-  background: backgroundScheme
+  background: backgroundScheme.optional()
 })
 
 export type Settings = z.infer<typeof settingsScheme>

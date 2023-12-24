@@ -21,7 +21,7 @@ const Background: Component = () => {
 
   return (
     <div>
-      <Show when={settings.background.file}>
+      <Show when={settings?.background?.file}>
         {background => (
           <img
             class={styles.background}
