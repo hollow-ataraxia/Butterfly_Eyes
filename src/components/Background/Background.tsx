@@ -1,34 +1,24 @@
-import { type Component, Show, onMount } from 'solid-js'
-import { useSettings } from '@features/settings/provider.tsx'
-import { readFile } from '@features/backgroundFile/utils/readFile.ts'
+import { type Component, Show, onMount, createSignal } from 'solid-js'
+import readFiles from '@features/backgroundFile/utils/readFiles.ts'
 
 import * as styles from './styles.css.ts'
 
 const Background: Component = () => {
-  const [settings, dispatch] = useSettings()
+  const [background, setBackground] = createSignal<string>()
 
   onMount(() => {
-    const loadFile = async (): Promise<void> => {
-      const file = await readFile({
-        root: await navigator.storage.getDirectory(),
-        pathname: ['background']
-      })
-      if (file != null) dispatch({ background: { file: await file.getFile() } })
-    }
-
-    void loadFile()
+    void (async (): Promise<void> => {
+      const files = await readFiles('Pictures/Wallpapers')
+      setBackground(
+        URL.createObjectURL(files[Math.floor(Math.random() * files.length)])
+      )
+    })()
   })
 
   return (
     <div>
-      <Show when={settings?.background?.file}>
-        {background => (
-          <img
-            class={styles.background}
-            src={URL.createObjectURL(background())}
-            loading="eager"
-          />
-        )}
+      <Show when={background()}>
+        {file => <img class={styles.background} src={file()} loading="eager" />}
       </Show>
     </div>
   )

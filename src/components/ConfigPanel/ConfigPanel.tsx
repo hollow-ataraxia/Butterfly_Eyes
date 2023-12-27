@@ -1,11 +1,6 @@
-import {
-  type JSX,
-  type Component,
-  createSignal,
-  createUniqueId
-} from 'solid-js'
-import { useSettings } from '@features/settings/provider.tsx'
-import { writeFile } from '@features/backgroundFile/utils/writeFile.ts'
+import type { JSX, Component } from 'solid-js'
+import { createSignal, createUniqueId } from 'solid-js'
+import writeFiles from '@features/backgroundFile/utils/writeFile.ts'
 import { GearSVG } from './gear.tsx'
 import styles from './Settings.css.ts'
 
@@ -16,16 +11,13 @@ interface SettingsProps {
 
 const Settings: Component<SettingsProps> = () => {
   const [modalStatus, setModal] = createSignal<boolean>(false)
-  const [, dispatch] = useSettings()
   const inputId = createUniqueId()
 
   const inputBackgroundEvent: InputEventHandler = event => {
     if (event.currentTarget.files != null) {
       const [file] = event.currentTarget.files
 
-      void writeFile({ file, filename: 'background' }).then(result => {
-        if (result.success) dispatch({ background: { file } })
-      })
+      void writeFiles({ file, path: 'Pictures/Wallpapers' })
     }
   }
 

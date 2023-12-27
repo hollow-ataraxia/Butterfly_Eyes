@@ -1,28 +1,26 @@
-import { readFile } from './readFile.ts'
+import createDirRec from './makeDirRec.ts'
 
-interface WriteFileProps {
+interface ReadFilesOptions {
   file: File
-  filename: string
+  path: string
 }
 type WriteFileType = Promise<{ success: true; file: File } | { success: false }>
 
-export const writeFile = async ({
-  file,
-  filename
-}: WriteFileProps): WriteFileType => {
-  const fileHandle = await readFile({
-    root: await navigator.storage.getDirectory(),
-    pathname: filename.split('/'),
-    create: true
-  })
-  const writable = await fileHandle?.createWritable()
+async function writeFiles({ path, file }: ReadFilesOptions): WriteFileType {
+  const dirHandle = await createDirRec(path)
 
-  if (fileHandle != null && writable != null) {
+  try {
+    const fileHandle = await dirHandle.getFileHandle(file.name, {
+      create: true
+    })
+    const writable = await fileHandle.createWritable()
     await writable.write(file)
     await writable.close()
 
-    return { file: await fileHandle?.getFile(), success: true }
+    return { success: true, file: await fileHandle.getFile() }
+  } catch {
+    return { success: false }
   }
-
-  return { success: false }
 }
+
+export default writeFiles
