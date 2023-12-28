@@ -1,16 +1,15 @@
 import { type Component } from 'solid-js'
-
-import Settings from '@components/ConfigPanel/ConfigPanel.tsx'
+import RootLayout from './layouts/Root'
+import SidePanelLayout from './layouts/SidePanel'
 import Background from '@components/Background/Background.tsx'
 import Clock from '@components/Clock/Clock.tsx'
 
 import '@styles/global.css.ts'
-import RootLayout from './layouts/Root'
 
 const App: Component = () => {
   return (
     <RootLayout>
-      <Settings />
+      <SidePanelLayout />
       <Background />
       <Clock />
     </RootLayout>
