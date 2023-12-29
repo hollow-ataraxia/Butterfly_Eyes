@@ -4,7 +4,9 @@ interface ReadFilesOptions {
   file: File
   path: string
 }
-type WriteFileType = Promise<{ success: true; file: File } | { success: false }>
+type WriteFileType = Promise<
+  { success: true; file: FileSystemFileHandle } | { success: false }
+>
 
 async function writeFiles({ path, file }: ReadFilesOptions): WriteFileType {
   const dirHandle = await createDirRec(path)
@@ -17,7 +19,7 @@ async function writeFiles({ path, file }: ReadFilesOptions): WriteFileType {
     await writable.write(file)
     await writable.close()
 
-    return { success: true, file: await fileHandle.getFile() }
+    return { success: true, file: fileHandle }
   } catch {
     return { success: false }
   }

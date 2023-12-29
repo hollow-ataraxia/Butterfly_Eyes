@@ -10,7 +10,9 @@ const Background: Component = () => {
     void (async (): Promise<void> => {
       const files = await readFiles('Pictures/Wallpapers')
       setBackground(
-        URL.createObjectURL(files[Math.floor(Math.random() * files.length)])
+        URL.createObjectURL(
+          await files[Math.floor(Math.random() * files.length)].getFile()
+        )
       )
     })()
   })

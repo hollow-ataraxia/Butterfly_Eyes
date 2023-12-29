@@ -8,6 +8,7 @@ import {
 import { useSettings } from '@features/settings/provider.tsx'
 import writeFiles from '@features/backgroundFile/utils/writeFile'
 import readFiles from '@features/backgroundFile/utils/readFiles.ts'
+import Preview from './Preview/Preview.tsx'
 import styles from './_config.css.ts'
 
 type InputEventHandler = JSX.EventHandler<HTMLInputElement, InputEvent>
@@ -52,13 +53,7 @@ const BackgroundConfigPanel: Component = () => {
 
       <div class={styles.imagesGrid}>
         <For each={settings.background?.files}>
-          {file => (
-            <img
-              style={{ height: '10em', width: '100%', 'object-fit': 'cover' }}
-              src={URL.createObjectURL(file)}
-              loading="lazy"
-            />
-          )}
+          {file => <Preview fileHandle={file} />}
         </For>
       </div>
     </section>
