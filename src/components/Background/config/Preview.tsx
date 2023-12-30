@@ -1,7 +1,7 @@
 import { createResource, type Component } from 'solid-js'
 import { useSettings } from '@features/settings/provider'
-import readFiles from '@features/SystemFiles/utils/readFiles'
-import deleteFile from '@features/SystemFiles/utils/deleteFile'
+import readFiles from '@features/SystemFiles/services/readFiles'
+import deleteFile from '@features/SystemFiles/services/deleteFile'
 
 interface PreviewProps {
   fileHandle: FileSystemFileHandle

@@ -6,8 +6,8 @@ import {
   For
 } from 'solid-js'
 import { useSettings } from '@features/settings/provider.tsx'
-import writeFiles from '@features/SystemFiles/utils/writeFile'
-import readFiles from '@features/SystemFiles/utils/readFiles.ts'
+import writeFiles from '@features/SystemFiles/services/writeFile'
+import readFiles from '@features/SystemFiles/services/readFiles.ts'
 import Preview from './Preview.tsx'
 import styles from './_config.css.ts'
 
