@@ -9,7 +9,7 @@ const Background: Component = () => {
   createEffect(() => {
     const files = backgrounds()
 
-    if (files.length > 1) {
+    if (files.length > 0) {
       void files[Math.floor(Math.random() * files.length)]
         .getFile()
         .then(file => setFile(URL.createObjectURL(file)))
