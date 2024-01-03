@@ -1,24 +1,24 @@
 import { type Component, Show, createEffect, createSignal } from 'solid-js'
-import { useSettings } from '@features/settings/provider.tsx'
+import { useBackgrounds } from '@/context/backgrounds/selector.ts'
 import * as styles from './styles.css.ts'
 
 const Background: Component = () => {
-  const [settings] = useSettings()
-  const [background, setBackground] = createSignal<string>()
+  const [backgrounds] = useBackgrounds()
+  const [file, setFile] = createSignal<string>()
 
   createEffect(() => {
-    const files = settings.background?.files
+    const files = backgrounds()
 
-    if (files != null) {
+    if (files.length > 1) {
       void files[Math.floor(Math.random() * files.length)]
         .getFile()
-        .then(file => setBackground(URL.createObjectURL(file)))
+        .then(file => setFile(URL.createObjectURL(file)))
     }
   })
 
   return (
     <div>
-      <Show when={background()}>
+      <Show when={file()}>
         {file => <img class={styles.background} src={file()} loading="eager" />}
       </Show>
     </div>

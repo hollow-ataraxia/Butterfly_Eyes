@@ -1,4 +1,4 @@
-import makeDirRec from '@features/SystemFiles/services/makeDirRec.ts'
+import makeDirRec from '@/utils/fileSystem/makeDirRec.ts'
 
 const deleteFile = async (filename: string): Promise<void> => {
   const parentDir = await makeDirRec('Pictures/Wallpapers')

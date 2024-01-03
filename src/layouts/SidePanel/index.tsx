@@ -1,7 +1,7 @@
 import { createSignal, type Component } from 'solid-js'
 import styles from './_sidePanel.css.ts'
-import OpenBtn from './components/OpenBtn.tsx'
-import BackgroundConfigPanel from '@components/Background/config/Panel.tsx'
+import OpenBtn from '../../components/OpenBtn.tsx'
+import BackgroundConfigPanel from '@/layouts/SidePanel/Backgrounds/index.tsx'
 
 const SidePanelLayout: Component = () => {
   const [isActive, setActive] = createSignal(false)

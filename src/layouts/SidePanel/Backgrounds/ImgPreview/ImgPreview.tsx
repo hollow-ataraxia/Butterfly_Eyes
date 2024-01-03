@@ -1,7 +1,7 @@
 import { createResource, type Component } from 'solid-js'
-import { useSettings } from '@features/settings/provider'
-import readFiles from '@features/SystemFiles/services/readFiles'
-import deleteFile from '@features/SystemFiles/services/deleteFile'
+import { useBackgrounds } from '@/context/backgrounds/selector'
+import readFiles from '@/services/readFiles.ts'
+import deleteFile from '@/services/deleteFile.ts'
 
 interface PreviewProps {
   fileHandle: FileSystemFileHandle
@@ -11,7 +11,7 @@ const getFileURI = async (fileHandle: FileSystemFileHandle): Promise<string> =>
   URL.createObjectURL(await fileHandle.getFile())
 
 export const Preview: Component<PreviewProps> = props => {
-  const [, dispatch] = useSettings()
+  const [, { setFileHandles }] = useBackgrounds()
   const [fileURI] = createResource(() => props.fileHandle, getFileURI)
 
   return (
@@ -33,7 +33,7 @@ export const Preview: Component<PreviewProps> = props => {
         onClick={() => {
           void deleteFile(props.fileHandle.name).then(async () => {
             const files = await readFiles('Pictures/Wallpapers')
-            dispatch({ background: { files } })
+            setFileHandles(files)
           })
         }}
       >

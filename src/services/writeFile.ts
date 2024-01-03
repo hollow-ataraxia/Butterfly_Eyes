@@ -1,6 +1,6 @@
-import createDirRec from './makeDirRec.ts'
+import createDirRec from '@/utils/fileSystem/makeDirRec.ts'
 
-interface ReadFilesOptions {
+interface WriteFileOptions {
   file: File
   path: string
 }
@@ -8,7 +8,7 @@ type WriteFileType = Promise<
   { success: true; file: FileSystemFileHandle } | { success: false }
 >
 
-async function writeFiles({ path, file }: ReadFilesOptions): WriteFileType {
+async function writeFiles({ path, file }: WriteFileOptions): WriteFileType {
   const dirHandle = await createDirRec(path)
 
   try {

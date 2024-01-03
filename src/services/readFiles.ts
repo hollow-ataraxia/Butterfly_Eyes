@@ -1,4 +1,4 @@
-import makeDirRec from './makeDirRec.ts'
+import makeDirRec from '@/utils/fileSystem/makeDirRec.ts'
 
 async function readFiles(path: string): Promise<FileSystemFileHandle[]> {
   const files = new Array<FileSystemFileHandle>()

@@ -5,21 +5,21 @@ import {
   onMount,
   For
 } from 'solid-js'
-import { useSettings } from '@features/settings/provider.tsx'
-import writeFiles from '@features/SystemFiles/services/writeFile'
-import readFiles from '@features/SystemFiles/services/readFiles.ts'
-import Preview from './Preview.tsx'
-import styles from './_config.css.ts'
+import { useBackgrounds } from '@/context/backgrounds/selector.ts'
+import writeFiles from '@/services/writeFile.ts'
+import readFiles from '@/services/readFiles.ts'
+import Preview from './ImgPreview/ImgPreview.tsx'
+import styles from './backgrounds.css.ts'
 
 type InputEventHandler = JSX.EventHandler<HTMLInputElement, InputEvent>
 
 const BackgroundConfigPanel: Component = () => {
-  const [settings, dispatch] = useSettings()
+  const [backgrounds, { setFileHandles }] = useBackgrounds()
   const inputId = createUniqueId()
 
   onMount(() => {
     void readFiles('Pictures/Wallpapers').then(files => {
-      dispatch({ background: { files } })
+      setFileHandles(files)
     })
   })
 
@@ -28,10 +28,7 @@ const BackgroundConfigPanel: Component = () => {
       const [file] = event.currentTarget.files
 
       void writeFiles({ file, path: 'Pictures/Wallpapers' }).then(res => {
-        if (res.success)
-          dispatch(prev => ({
-            background: { files: prev.background?.files?.concat(res.file) }
-          }))
+        if (res.success) setFileHandles(prev => prev.concat(res.file))
       })
     }
   }
@@ -52,9 +49,7 @@ const BackgroundConfigPanel: Component = () => {
       </div>
 
       <div class={styles.imagesGrid}>
-        <For each={settings.background?.files}>
-          {file => <Preview fileHandle={file} />}
-        </For>
+        <For each={backgrounds()}>{file => <Preview fileHandle={file} />}</For>
       </div>
     </section>
   )

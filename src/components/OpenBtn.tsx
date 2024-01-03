@@ -1,5 +1,5 @@
 import { type Component } from 'solid-js'
-import styles from '../_sidePanel.css.ts'
+import styles from '../layouts/SidePanel/_sidePanel.css.ts'
 
 interface OpenBtnProps {
   onClick: () => unknown
