@@ -15,7 +15,7 @@ export default {
   }),
   imagesGrid: style({
     display: 'grid',
-    gridTemplateColumns: '50% 50%',
+    gridTemplateColumns: 'auto auto',
     gap: '.3em'
   })
 }
