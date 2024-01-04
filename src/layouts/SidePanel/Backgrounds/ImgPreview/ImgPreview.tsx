@@ -2,6 +2,7 @@ import { createResource, type Component } from 'solid-js'
 import { useBackgrounds } from '@/context/backgrounds/selector'
 import readFiles from '@/services/readFiles.ts'
 import deleteFile from '@/services/deleteFile.ts'
+import styles from './imgPreview.css.ts'
 
 interface PreviewProps {
   fileHandle: FileSystemFileHandle
@@ -15,12 +16,8 @@ export const Preview: Component<PreviewProps> = props => {
   const [fileURI] = createResource(() => props.fileHandle, getFileURI)
 
   return (
-    <figure style={{ position: 'relative' }}>
-      <img
-        style={{ height: '10em', width: '100%', 'object-fit': 'cover' }}
-        src={fileURI()}
-        loading="lazy"
-      />
+    <figure class={styles.ImgPreviewContainer}>
+      <img class={styles.image} src={fileURI()} loading="lazy" />
 
       <button
         type="button"

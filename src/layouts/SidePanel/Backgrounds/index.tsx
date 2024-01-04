@@ -39,13 +39,15 @@ const BackgroundConfigPanel: Component = () => {
       <div>
         <input
           type="file"
+          accept="image/*"
           id={inputId}
-          style={{ display: 'none' }}
           onInput={inputBackgroundEvent}
         />
-        <label for={inputId} class={styles.inputFileLabel}>
-          Upload
-        </label>
+        <label
+          for={inputId}
+          class={styles.inputFileLabel}
+          innerText={'Upload'}
+        />
       </div>
 
       <div class={styles.imagesGrid}>
